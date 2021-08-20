@@ -1,0 +1,349 @@
+/*
+ * Pueda usar esta plantilla para la carga del reto a iMaster
+ * Copie las clases de los paquetes Modelo, Vista, Controlador y Util
+ * No incluya los import de los archivos .java solo las clases
+ */
+// Importaciones necesarias en iMaster
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+// Util (No modificar)
+class JDBCUtilities {
+    private static final String DATABASE_LOCATION = "ProyectosConstruccion.db";
+
+    public static Connection getConnection() throws SQLException {
+        String url = "jdbc:sqlite:"+DATABASE_LOCATION;
+
+        return DriverManager.getConnection(url);
+    }
+}
+
+// Remplace en adelante por las clases de sus archivos .java
+
+// Vista
+public class VistaRequerimientos {
+
+    public static final ControladorRequerimientos controlador = new ControladorRequerimientos();
+
+    public static void requerimiento1() {
+        System.out.println("LISTADO");
+        try {
+            // Su código
+            ArrayList<Requerimiento_1Vo> requerimiento_1 = controlador.consultarRequerimiento1();
+
+            //Encabezado del resultado
+            System.out.println("Ciudad, Promedio");
+
+            for (Requerimiento_1Vo proyecto : requerimiento_1){
+                System.out.printf("%s %f %n",
+                    proyecto.getCiudad_Residencia(),proyecto.getPromedio());
+            }
+        } catch (Exception e) {
+            System.out.println("Se ha producido el siguiente error:" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void requerimiento2() {
+        System.out.println("LISTADO");
+        try {
+            // Su código
+            ArrayList<Requerimiento_2Vo> requerimiento_2 = controlador.consultarRequerimiento2();
+
+            //Encabezado del resultado
+            System.out.println("Proyecto, Proveedor");
+
+            for (Requerimiento_2Vo proyecto : requerimiento_2){
+                System.out.printf("%d %s %n",
+                    proyecto.getID_Proyecto(),proyecto.getProveedor());
+            }
+        } catch (Exception e) {
+            System.out.println("Se ha producido el siguiente error:" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void requerimiento3() {
+        System.out.println("LISTADO");
+        try {
+            // Su código
+            ArrayList<Requerimiento_3Vo> requerimiento_3 = controlador.consultarRequerimiento3();
+
+            //Encabezado del resultado
+            System.out.println("Proyecto, Nombre Material");
+
+            for (Requerimiento_3Vo proyecto : requerimiento_3){
+                System.out.printf("%d %s %n",
+                    proyecto.getId_Proyecto(),proyecto.getNombre_Material());
+            }
+        } catch (Exception e) {
+            System.out.println("Se ha producido el siguiente error:" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+}
+
+
+// Controlador
+public class ControladorRequerimientos {
+
+    private final Requerimiento_1Dao requerimiento1Dao;
+    private final Requerimiento_2Dao requerimiento2Dao;
+    private final Requerimiento_3Dao requerimiento3Dao;
+
+    
+    // Su código
+
+    public ControladorRequerimientos() {
+        this.requerimiento1Dao = new Requerimiento_1Dao();
+        this.requerimiento2Dao = new Requerimiento_2Dao();
+        this.requerimiento3Dao = new Requerimiento_3Dao();
+    }
+
+    public ArrayList<Requerimiento_1Vo> consultarRequerimiento1() throws SQLException {
+        // Su código
+        return this.requerimiento1Dao.requerimiento1();
+    }
+
+    public ArrayList<Requerimiento_2Vo> consultarRequerimiento2() throws SQLException {
+        // Su código
+        return this.requerimiento2Dao.requerimiento2();
+    }
+
+    public ArrayList<Requerimiento_3Vo> consultarRequerimiento3() throws SQLException {
+        // Su código
+        return this.requerimiento3Dao.requerimiento3();
+    }
+}
+
+
+// Modelo
+// VO
+public class Requerimiento_1Vo {
+    private String Ciudad_Residencia;
+    private Double Promedio;
+
+    public Requerimiento_1Vo() {
+
+    }
+    public Requerimiento_1Vo(String ciudad_Residencia, Double promedio) {
+        this.Ciudad_Residencia = ciudad_Residencia;
+        this.Promedio = promedio;
+    }
+
+
+    public String getCiudad_Residencia() {
+        return Ciudad_Residencia;
+    }
+
+
+    public void setCiudad_Residencia(String ciudad_Residencia) {
+        Ciudad_Residencia = ciudad_Residencia;
+    }
+
+
+    public Double getPromedio() {
+        return Promedio;
+    }
+
+
+    public void setPromedio(Double promedio) {
+        Promedio = promedio;
+    }
+
+    
+
+    
+}
+
+
+public class Requerimiento_2Vo {
+    private int ID_Proyecto;
+    private String Proveedor;
+
+    public Requerimiento_2Vo() {
+
+    }
+
+    public Requerimiento_2Vo(int iD_Proyecto, String proveedor) {
+        this.ID_Proyecto = iD_Proyecto;
+        this.Proveedor = proveedor;
+    }
+
+    public int getID_Proyecto() {
+        return ID_Proyecto;
+    }
+
+    public void setID_Proyecto(int iD_Proyecto) {
+        ID_Proyecto = iD_Proyecto;
+    }
+
+    public String getProveedor() {
+        return Proveedor;
+    }
+
+    public void setProveedor(String proveedor) {
+        Proveedor = proveedor;
+    }
+
+    
+
+    
+
+}
+
+
+public class Requerimiento_3Vo {
+    // Su código
+    private int id_Proyecto;
+    private String nombre_Material;
+
+    public Requerimiento_3Vo() {
+
+    }
+
+    public Requerimiento_3Vo(int id_Proyecto, String nombre_Material) {
+        this.id_Proyecto = id_Proyecto;
+        this.nombre_Material = nombre_Material;
+    }
+
+    public int getId_Proyecto() {
+        return id_Proyecto;
+    }
+
+    public void setId_Proyecto(int id_Proyecto) {
+        this.id_Proyecto = id_Proyecto;
+    }
+
+    public String getNombre_Material() {
+        return nombre_Material;
+    }
+
+    public void setNombre_Material(String nombre_Material) {
+        this.nombre_Material = nombre_Material;
+    }
+
+    
+
+    
+
+
+
+}
+
+
+// DAO
+public class Requerimiento_1Dao {
+    public ArrayList<Requerimiento_1Vo> requerimiento1() throws SQLException {
+        // Su 
+        ArrayList<Requerimiento_1Vo> respuesta = new ArrayList<Requerimiento_1Vo>();
+        Connection conexion = JDBCUtilities.getConnection();
+
+        try{
+            String consulta = "select Ciudad_Residencia, AVG(Salario) as 'Promedio' from Lider l  group by Ciudad_Residencia  having (AVG(Salario)<500000) order by AVG(Salario) desc";
+            Statement statement = conexion.createStatement();
+            ResultSet resulset = statement.executeQuery(consulta);
+
+            while (resulset.next()){
+                Requerimiento_1Vo requerimiento1 = new Requerimiento_1Vo();
+                requerimiento1.setCiudad_Residencia(resulset.getString("Ciudad_Residencia"));
+                 requerimiento1.setPromedio(resulset.getDouble("Promedio"));
+
+                respuesta.add(requerimiento1);
+            }
+
+            resulset.close();
+            statement.close();
+
+        }catch(SQLException e){
+            System.err.println("Error: " +e);
+        }finally{
+            if (conexion != null){
+                conexion.close();
+            }
+
+        }
+
+        return respuesta;
+    }
+}
+
+public class Requerimiento_2Dao {
+    public ArrayList<Requerimiento_2Vo> requerimiento2() throws SQLException {
+
+        
+
+            // Su 
+            ArrayList<Requerimiento_2Vo> respuesta = new ArrayList<Requerimiento_2Vo>();
+            Connection conexion = JDBCUtilities.getConnection();
+    
+            try{
+                String consulta = "select p.ID_Proyecto as proyecto, c.Proveedor as proveedor from Compra c inner join Proyecto p  on c.ID_Proyecto = p.ID_Proyecto where p.Ciudad = 'Bogota' order by p.ID_Proyecto ";
+                Statement statement = conexion.createStatement();
+                ResultSet resulset = statement.executeQuery(consulta);
+    
+                while (resulset.next()){
+                    Requerimiento_2Vo requerimiento2 = new Requerimiento_2Vo();
+                    requerimiento2.setID_Proyecto (resulset.getInt("proyecto"));
+                     requerimiento2.setProveedor(resulset.getString("proveedor"));
+    
+                    respuesta.add(requerimiento2);
+                }
+    
+                resulset.close();
+                statement.close();
+    
+            }catch(SQLException e){
+                System.err.println("Error: " +e);
+            }finally{
+                if (conexion != null){
+                    conexion.close();
+                }
+    
+            }
+    
+            return respuesta;
+        }
+    
+}
+
+public class Requerimiento_3Dao {
+    public ArrayList<Requerimiento_3Vo> requerimiento3() throws SQLException {
+     
+            // Su 
+            ArrayList<Requerimiento_3Vo> respuesta = new ArrayList<Requerimiento_3Vo>();
+            Connection conexion = JDBCUtilities.getConnection();
+    
+            try{
+                String consulta = "select p.ID_Proyecto as proyecto, mc.Nombre_Material as Nombre_Material from MaterialConstruccion mc inner join Compra c  on mc.ID_MaterialConstruccion = c.ID_MaterialConstruccion inner join Proyecto p on c.ID_Proyecto = p.ID_Proyecto where c.ID_Proyecto BETWEEN 20 and 35 order by p.ID_Proyecto asc";
+                Statement statement = conexion.createStatement();
+                ResultSet resulset = statement.executeQuery(consulta);
+    
+                while (resulset.next()){
+                    Requerimiento_3Vo requerimiento3 = new Requerimiento_3Vo();
+                    requerimiento3.setId_Proyecto(resulset.getInt("proyecto"));
+                     requerimiento3.setNombre_Material(resulset.getString("Nombre_Material"));
+    
+                    respuesta.add(requerimiento3);
+                }
+    
+                resulset.close();
+                statement.close();
+    
+            }catch(SQLException e){
+                System.err.println("Error: " +e);
+            }finally{
+                if (conexion != null){
+                    conexion.close();
+                }
+    
+            }
+    
+            return respuesta;
+        }
+    
+}
